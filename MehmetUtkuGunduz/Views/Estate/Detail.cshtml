@@ -1,0 +1,244 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+}
+@model EstateModel
+    <section class="ftco-section bg-light justify-content-center align-items-center">
+        <div class="container">
+            <h2>Ürün Detayı</h2>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <table class="table">
+                        <tr>
+                            <td><b>Fotoğraf</b></td>
+                            <td><img src="@Model.ImageUrl.ImageUrl" alt="resim aciklama" width="320"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Video</b></td>
+                            <td>
+                            <video width="320" height="240" controls>
+                                <source src="@Model.VideoUrl.VideoUrl" type="video/mp4">
+                                Tarayıcınız video etiketini desteklemiyor.
+                            </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>İlan Başlığı</b></td>
+                            <td>@Model.Title</td>
+                        </tr>
+                        <tr>
+                            <td><b>Şehir</b></td>
+                            <td>@Model.City</td>
+                        </tr>
+                        <tr>
+                            <td><b>İlçe</b></td>
+                            <td>@Model.District</td>
+                        </tr>
+                        <tr>
+                            <td><b>Mahalle</b></td>
+                            <td>@Model.Neighbourhood</td>
+                        </tr>
+                        <tr>
+                            <td><b>Kategori</b></td>
+                            <td>@Model.Category.Name</td>
+                        </tr>
+                        <tr>
+                            <td><b>Konut Tipi</b></td>
+                            <td>@Model.ResidentialType</td>
+                        </tr>
+                        <tr>
+                            <td><b>Fiyat</b></td>
+                            <td>@Model.Price</td>
+                        </tr>
+                        <tr>
+                            <td><b>Brüt Metrekare</b></td>
+                            <td>@Model.SquareMeters</td>
+                        </tr>
+                        <tr>
+                            <td><b>Oda/Salon Sayısı</b></td>
+                            <td>@Model.NumberOfRooms</td>
+                        </tr>
+                        <tr>
+                            <td><b>Banyo Sayısı</b></td>
+                            <td>@Model.NumberOfBathrooms</td>
+                        </tr>
+                        <tr>
+                            <td><b>Binanın Kat Sayısı</b></td>
+                            <td>@Model.NumberOfBuildingFloors</td>
+                        </tr>
+                        <tr>
+                            <td><b>Kat Bilgisi</b></td>
+                            <td>@Model.FloorNumber</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tapu Bilgisi</b></td>
+                            <td>@Model.TitleDeedStatus</td>
+                        </tr>
+                        <tr>
+                            <td><b>Kullanım Durumu</b></td>
+                            <td>@Model.UsageStatus</td>
+                        </tr>
+                        <tr>
+                            <td><b>Isınma Tipi</b></td>
+                            <td>@Model.HeatingType</td>
+                        </tr>
+                        <tr>
+                            <td><b>Eşya Durumu</b></td>
+                            <td>@Model.FurnitureStatus</td>
+                        </tr>
+                        <tr>
+                            <td><b>Cephe</b></td>
+                            <td>@Model.Aspect</td>
+                        </tr>
+                        <tr>
+                            <td><b>İnşa Yılı</b></td>
+                            <td>@Model.ConstructionYear</td>
+                        </tr>
+                        <tr>
+                            <td><b>İlan Sahibi</b></td>
+                            <td>@Model.ListingOwner</td>
+                        </tr>
+                        <tr>
+                            <td><b>Telefon Numarası</b></td>
+                            <td>@Model.PhoneNumber</td>
+                        </tr>
+                        <tr>
+                            <td><b>E-Posta Adresi</b></td>
+                            <td>@Model.EmailAddress</td>
+                        </tr>
+                        <tr>
+                            <td><b>İlan Tarihi</b></td>
+                            <td>@Model.ListingDate</td>
+                        </tr>
+                        <tr>
+                            <td><b>İlan Güncelleme Tarihi</b></td>
+                            <td>@Model.UpdateDate</td>
+                        </tr>
+
+
+                        <tr>
+                            <td><b>Krediye Uygunluk</b></td>
+                            <td>
+                                @if (Model.CreditEligibility)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Uygun</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Uygun Değil</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Site Bilgisi</b></td>
+                            <td>
+                                @if (Model.PropertyLocation)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Site İçinde</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Sitede Değil</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Durumu</b></td>
+                            <td>
+                                @if (Model.Status)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Aktif</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Pasif</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Bahçe Bilgisi</b></td>
+                            <td>
+                                @if (Model.HasGarden)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Bahçeli</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Bahçesiz</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Asansör Bilgisi</b></td>
+                            <td>
+                                @if (Model.HasElevator)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Asansör Var</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Asansör Yok</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Balkon Bilgisi</b></td>
+                            <td>
+                                @if (Model.HasBalcony)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Balkon Var</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Balkon Yok</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Otopark Bilgisi</b></td>
+                            <td>
+                                @if (Model.HasParking)
+                                {
+                                    <span style="color: white;" class="badge bg-success">Otopark Var</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Otopark Yok</span>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Kablosuz Ağ Bilgisi</b></td>
+                            <td>
+                                @if (Model.HasWifi)
+                                {
+                                    <span style ="color: white;" class="badge bg-success">Kablosuz Ağ Var</span>
+                                }
+                                else
+                                {
+
+                                    <span style="color: white;" class="badge bg-danger">Kablosuz Ağ Yok</span>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+
+                    <a asp-action="Index" class="btn btn-outline-secondary">Geri Dön</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Düzenle</a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Sil</a>
+
+                </div>
+            </div>
+        </div>
+    <</section>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}
+

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Delete";
+}
+
+@model EstateModel
+    <section class="ftco-section bg-light justify-content-center align-items-center">
+        <div class="container">
+            <h1>Ürün Sil</h1>
+            <h3>"<b>@Model.City</b>" Adlı Ürün Silinecektir Onaylıyor musunuz?</h3>
+            <form asp-controller="Estate" asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <a asp-action="Index" class="btn btn-outline-secondary">Geri Dön</a>
+                <input type="submit" value="Sil" class="btn btn-outline-danger" />
+            </form>
+        </div>
+    </section>
+

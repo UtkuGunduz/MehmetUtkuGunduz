@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Members";
+    Layout = "~/Views/Shared/_LayoutSBAdmin.cshtml";
+}
+@model List<UserModel>
+
+    <div id="page-wrapper">
+        <h1>Kullanıcılar</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Adı Soyadı</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>E-Posta</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                  <tr>
+                        <td>@item.Id</td>
+                        <td>@item.FullName</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                </tr>  
+                }
+        
+            </tbody>
+        </table>
+    </div>
+

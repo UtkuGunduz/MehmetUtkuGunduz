@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "UserPage";
+}
+@model UserModel
+<section class="ftco-section bg-light justify-content-center align-items-center">
+    <div class="container">
+        <h2>Üye Sayfası</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/Photos/@Model.PhotoUrl" class="img-fluid" />
+            </div>
+            <div class="col-md-8">
+                @if (Model.Role == "Uye")
+                {
+                    <span style="color: white;" class="badge bg-info">Normal Üye</span>
+                }
+                @if (Model.Role == "Admin")
+                {
+                    <span style="color: white;" class="badge bg-info">Yönetici Üye</span>
+                }
+                <table class="table">
+                    <tr>
+                        <td><b>Adı Soyadı</b></td>
+                        <td>@Model.FullName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Kullanıcı Adı</b></td>
+                        <td>@Model.UserName</td>
+                    </tr>
+                    <tr>
+                        <td><b>E-Posta</b></td>
+                        <td>@Model.Email</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

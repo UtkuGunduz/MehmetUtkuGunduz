@@ -1,0 +1,23 @@
+﻿﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor
+<ul class="navbar-nav">
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <li class="nav-item cta">
+            <a asp-area="" asp-controller="Home" asp-action="UserPage" class="nav-link ml-lg-2"><span class="icon-user"></span>
+                Merhaba @User.Identity.Name,
+            </a>
+        </li>
+        <li class="nav-item cta cta-colored">
+            <a asp-area="" asp-controller="Home" asp-action="Logout" class="nav-link"><span class="icon-pencil"></span>Oturumu Kapat</a>
+        </li>
+
+    }
+    else
+    {
+        <li class="nav-item cta"><a asp-area="" asp-controller="Home" asp-action="Login" class="nav-link ml-lg-2"><span class="icon-user"></span> Oturum Aç</a></li>
+        <li class="nav-item cta cta-colored"><a asp-area="" asp-controller="Home" asp-action="Register" class="nav-link"><span class="icon-pencil"></span> Kayıt Ol</a></li>
+
+    }
+</ul>

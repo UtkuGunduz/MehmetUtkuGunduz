@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "Categories";
+}
+    <div id="page-wrapper">
+        <div id="container">
+            <h2>Kategoriler</h2>
+            <hr />
+            <div class="row">
+                <div class="col-md-8">
+                    <table class="table" id="tbCategories">
+                        <thead>
+                            <tr>
+                                <th>SN</th>
+                                <th>Kategori</th>
+                                <th>Düzenle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+
+                    <h3 id="baslik"></h3><hr />
+
+                    <div class="mb-3">
+                        <label>Kategori</label>
+                        <input type="text" class="form-control" id="txtName" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" id="txtId" />
+                        <button class="btn btn-primary" id="btnKaydet">Kaydet</button>
+                        <button class="btn btn-secondary" id="btnVazgec">Vazgeç</button>
+                        <button class="btn btn-danger" id="btnSil">Sil</button>
+                    </div>
+                    <div class="alert" id="sonuc"></div>
+                </div>
+            </div>
+
+
+
+
+
+
+            @section Scripts{
+                <script>
+                    $(document).ready(function () {
+                        LoadCategories();
+                        function LoadCategories() {
+                            $("#btnVazgec").hide();
+                            $("#btnSil").hide();
+                            $("#baslik").html("Yeni Kategori");
+                            $("#txtName").val("");
+                            $("#txtId").val("0");
+                            $("#tbCategories tbody").empty();
+                            $.ajax({
+                                url: "/Admin/CategoryListAjax",
+                                type: "Get",
+                                data: {},
+                                success: function (data) {
+                                    var i = 1;
+                                    $.each(data, function (index, item) {
+                                        var category = '<tr id="' + item.id + '"><td>' + i + ' </td> <td>' + item.name + '</td><td><button class="btn btn-warning edit">Düzenle</button></td></tr>';
+                                        $("#tbCategories tbody").append(category);
+                                        i++;
+                                    });
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                },
+                            });
+                        }
+        
+                        $("#btnKaydet").click(function () {
+                            var name = $("#txtName").val();
+
+                            var id = $("#txtId").val();
+
+                            if (name == "" || name == null) {
+                                $("#sonuc")
+                                    .removeClass()
+                                    .addClass("alert alert-danger")
+                                    .html("Kategori Giriniz!");
+                                return false;
+                            }
+
+                            $.ajax({
+                                url: "/Admin/CategoryAddEditAjax",
+                                type: "POST",
+                                data: { id: id, name: name },
+                                success: function (data) {
+
+                                        $("#sonuc")
+                                            .removeClass()
+                                            .addClass("alert alert-success")
+                                            .html(data.message);
+                                        LoadCategories();
+                                },
+                                error: function (e) { }
+                            });
+                        });
+
+                        $(document).on("click", ".edit", function () {
+                            var id = $(this).closest("tr").attr("id");
+                            $("#baslik").html("Kategori Düzenle");
+                            $("#btnVazgec").show();
+                            $("#btnSil").show();
+                            $.ajax({
+                                url: "/admin/CategoryByIdAjax",
+                                type: "Get",
+                                data: { id: id },
+                                success: function (data) {
+                                    $("#txtName").val(data.name);
+                                    $("#txtId").val(data.id);
+
+                                },
+                                error: function () { }
+                            });
+                        });
+
+                        $("#btnVazgec").click(function () {
+                            LoadCategories();
+                        });
+
+                        $("#btnSil").click(function () {
+                            var id = $("#txtId").val();
+                            $.ajax({
+                                url: "/admin/CategoryRemoveAjax",
+                                type: "Get",
+                                data: { id: id },
+                                success: function (data) {
+
+                                        $("#sonuc")
+                                            .removeClass()
+                                            .addClass("alert alert-success")
+                                            .html(data.message);
+                                        LoadCategories();
+
+                                },
+                                error: function () { }
+                            });
+                        });
+                    });
+                </script>
+            }
+        </div>
+    </div>

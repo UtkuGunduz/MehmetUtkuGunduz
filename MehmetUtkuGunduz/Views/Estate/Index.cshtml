@@ -1,0 +1,289 @@
+﻿@{
+	ViewData["Title"] = "Index";
+}
+@model List<EstateModel>
+
+<section class="home-slider owl-carousel">
+	<div class="slider-item" style="background-image:url(RealEstateTemplate/images/bg_1.jpg);">
+	</div>
+</section>
+<section class="ftco-section bg-light justify-content-center align-items-center">
+	<div class="container">
+		<a asp-action="Insert" class="btn btn-outline-primary">Ekle</a>
+		<form asp-action="Index" method="get">
+			<div class="input-group w-50 mt-3">
+				<input type="search" name="searchText" value="@ViewBag.SearchText" class="form-control " placeholder="Aranacak Değer Giriniz" />
+				<div class="input-group-append">
+					<input type="submit" value="Ara" class="btn btn-primary" />
+				</div>
+			</div>
+		</form>
+
+		<table class="table table-hover text-center align-middle">
+			<thead>
+				<tr>
+					<th>SN</th>
+					<th>İlan Başlığı</th>
+					<th>Şehir Adı</th>
+					<th>Konut Tipi</th>
+					<th>Fiyat</th>
+					<th>Brüt Metrekare</th>
+					<th>Oda/Salon Sayısı</th>
+					<th>İlan Tarihi</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>@item.Id</td>
+						<th>@item.Title</th>
+						<th>@item.City</th>
+						<th>@item.ResidentialType</th>
+						<th>@item.Price</th>
+						<th>@item.SquareMeters</th>
+						<th>@item.NumberOfRooms</th>
+						<th>@item.ListingDate</th>
+						<td>
+							<a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-outline-info">Detay</a>
+							<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Düzenle</a>
+							<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Sil</a>
+						</td>
+					</tr>
+
+				}
+
+			</tbody>
+		</table>
+
+		<ul class="pagination">
+			@for (int i = 1; i <= ViewBag.PageCount; i++)
+			{
+				if (i == ViewBag.Page)
+				{
+					<li class="page-item active"><a class="page-link" asp-route-searchtext="@ViewBag.SearchText" asp-route-page="@i" asp-route-size=@ViewBag.Size>@i</a></li>
+				}
+				else
+				{
+					<li class="page-item"><a class="page-link" asp-route-searchtext="@ViewBag.SearchText" asp-route-page="@i" asp-route-size=@ViewBag.Size>@i</a></li>
+				}
+
+			}
+
+
+
+		</ul>
+
+		<ul class="pagination">
+			@for (int i = 5; i <= 25; i = i + 5)
+			{
+				if (i == ViewBag.Size)
+				{
+					<li class="page-item active"><a class="page-link" asp-route-searchtext="@ViewBag.SearchText" asp-route-page="@ViewBag.page" asp-route-size="@i">@i</a></li>
+				}
+				else
+				{
+					<li class="page-item "><a class="page-link" asp-route-searchtext="@ViewBag.SearchText" asp-route-page="@ViewBag.page" asp-route-size="@i">@i</a></li>
+				}
+			}
+		</ul>
+	</div>
+</section>
+
+
+<section class="ftco-section bg-light">
+	<div class="container">
+		<div class="row d-flex">
+			<div class="col-md-3 d-flex align-self-stretch ftco-animate">
+				<div class="media block-6 services py-4 d-block text-center">
+					<div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-pin"></span></div></div>
+					<div class="media-body p-2 mt-2">
+						<h3 class="heading mb-3">Dünyanın Her Yerinde Gayrimenkuller Bulun.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 d-flex align-self-stretch ftco-animate">
+				<div class="media block-6 services py-4 d-block text-center">
+					<div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-detective"></span></div></div>
+					<div class="media-body p-2 mt-2">
+						<h3 class="heading mb-3">Tecrübeli Acentalarımızla Hizmetinizdeyiz.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 d-flex align-sel Searchf-stretch ftco-animate">
+				<div class="media block-6 services py-4 d-block text-center">
+					<div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-house"></span></div></div>
+					<div class="media-body p-2 mt-2">
+						<h3 class="heading mb-3">Kiralık Modern Gayrimenkuller Satın Alın &amp; Kiralayın.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 d-flex align-self-stretch ftco-animate">
+				<div class="media block-6 services py-4 d-block text-center">
+					<div class="d-flex justify-content-center"><div class="icon"><span class="flaticon-purse"></span></div></div>
+					<div class="media-body p-2 mt-2">
+						<h3 class="heading mb-3">Hayallerinizdeki Gelir Düzeyine Ulaşın.</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-properties">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-3">
+			<div class="col-md-7 heading-section text-center ftco-animate">
+				<span class="subheading">Son Eklenen Gönderiler</span>
+				<h2 class="mb-4">Son Eklenen Gayrimenkuller</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="properties-slider owl-carousel ftco-animate">
+					@foreach (var x in Model)
+					{
+					<div class="item">
+						<div class="properties">
+							<a asp-action="Detail" asp-route-id="@x.Id" class="img d-flex justify-content-center align-items-center" style="background-image: url('@x.ImageUrl.ImageUrl');">
+								<div class="icon d-flex justify-content-center align-items-center">
+									<span class="icon-search2"></span>
+								</div>
+							</a>
+							<div class="text p-3">
+								@if (@x.Category.Name == "Satılık")
+								{
+									<span class="status sale">@x.Category.Name</span>
+								}
+								else if (@x.Category.Name == "Kiralık")
+								{
+									<span class="status rent">@x.Category.Name</span>
+								}
+								else
+								{
+									<span class="status sale">@x.Category.Name</span>
+								}
+								<div class="d-flex">
+									<div class="one">
+										<h3><a href="#">@x.Title</a></h3>
+										<p>@x.ResidentialType</p>
+									</div>
+									<div class="two">
+										<span class="price">@x.Price TL</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(RealEstateTemplate/images/bg_1.jpg);">
+	<div class="container">
+		<div class="row justify-content-center mb-3 pb-3">
+			<div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+				<h2 class="mb-4">Güncel Sayılar</h2>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-10">
+				<div class="row">
+					<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+						<div class="block-18 text-center">
+							<div class="text">
+								<strong class="number" data-number="9000">0</strong>
+								<span>Memnun Müşteriler</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+						<div class="block-18 text-center">
+							<div class="text">
+								<strong class="number" data-number="10000">0</strong>
+								<span>Gayrimenkuller</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+						<div class="block-18 text-center">
+							<div class="text">
+								<strong class="number" data-number="1000">0</strong>
+								<span>Acentalarımız</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+						<div class="block-18 text-center">
+							<div class="text">
+								<strong class="number" data-number="100">0</strong>
+								<span>Ödüllerimiz</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section bg-light">
+	<div class="container">
+		<div class="row justify-content-center mb-5 pb-3">
+			<div class="col-md-7 heading-section text-center ftco-animate">
+				<span class="subheading">Özel teklifler</span>
+				<h2 class="mb-4">Önerilen Gayrimenkuller</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm col-md-6 col-lg ftco-animate">
+				@foreach (var x in Model)
+				{
+				<div class="item">
+					<div class="properties">
+						<a asp-action="Detail" asp-route-id="@x.Id" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url('@x.ImageUrl.ImageUrl');">
+							<div class="icon d-flex justify-content-center align-items-center">
+								<span class="icon-search2"></span>
+							</div>
+						</a>
+						<div class="text p-3">
+							@if (@x.Category.Name == "Satılık")
+							{
+								<span class="status sale">@x.Category.Name</span>
+							}
+							else if (@x.Category.Name == "Kiralık")
+							{
+								<span class="status rent">@x.Category.Name</span>
+							}
+							else
+							{
+								<span class="status sale">@x.Category.Name</span>
+							}
+							<div class="d-flex">
+								<div class="one">
+									<h3><a href="#">@x.Title</a></h3>
+									<p>@x.ResidentialType</p>
+								</div>
+								<div class="two">
+									<span class="price">@x.Price TL</span>
+								</div>
+							</div>
+							<p>@x.Title</p>
+							<hr>
+							<p class="bottom-area d-flex">
+								<span><i class="flaticon-selection"></i> @x.SquareMeters</span>
+								<span class="ml-auto"><i class="flaticon-bathtub"></i> @x.NumberOfBathrooms</span>
+								<span><i class="flaticon-bed"></i> @x.NumberOfRooms</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+

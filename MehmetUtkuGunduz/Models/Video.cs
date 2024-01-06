@@ -1,0 +1,9 @@
+﻿namespace MehmetUtkuGunduz.Models
+{
+    public class Video
+    {
+        public int Id { get; set; }
+        public string VideoUrl { get; set; }
+        public Estate Estate { get; set; }
+    }
+}
