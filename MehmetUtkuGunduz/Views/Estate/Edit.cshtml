@@ -5,7 +5,7 @@
 
     <section class="ftco-section bg-light justify-content-center align-items-center">
         <div class="container">
-            <h2>Ürün Düzenle</h2>
+            <h2>Emlak Düzenle</h2>
             <hr />
             <div class="row">
                 <div class="col-md-4">
@@ -31,9 +31,14 @@
                             <span asp-validation-for="Neighbourhood" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="Category" class="form-label">Kategori</label>
-                            <textarea rows="3" class="form-control" asp-for="@Model.Category.Name"></textarea>
-                            <span asp-validation-for="Category" class="text-danger"></span>
+                            <label asp-for="CategoryId" class="form-label">Kategori</label>
+                            <select asp-for="CategoryId" class="form-control">
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@category.Id" selected="@((Model.CategoryId == category.Id).ToString().ToLower())">@category.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
                             <label asp-for="ResidentialType" class="form-label">Konut Tipi</label>

@@ -135,7 +135,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Estate", b =>
@@ -272,7 +272,7 @@ namespace MehmetUtkuGunduz.Migrations
                     b.HasIndex("VideoId")
                         .IsUnique();
 
-                    b.ToTable("Estates");
+                    b.ToTable("Estates", (string)null);
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Image", b =>
@@ -289,7 +289,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageUrls");
+                    b.ToTable("ImageUrls", (string)null);
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.ToDo", b =>
@@ -309,7 +309,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDos");
+                    b.ToTable("ToDos", (string)null);
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Video", b =>
@@ -326,7 +326,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VideoUrls");
+                    b.ToTable("VideoUrls", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

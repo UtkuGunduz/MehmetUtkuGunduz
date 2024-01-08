@@ -7,6 +7,7 @@ using System.Diagnostics;
 using MehmetUtkuGunduz.ViewModels;
 using System.Security.Claims;
 using Microsoft.Extensions.FileProviders;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace MehmetUtkuGunduz.Controllers
 {
@@ -19,15 +20,17 @@ namespace MehmetUtkuGunduz.Controllers
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IFileProvider _fileProvider;
+        private readonly INotyfService _notifyService;
 
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IFileProvider fileProvider)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, SignInManager<AppUser> signInManager, IFileProvider fileProvider, INotyfService notifyService)
         {
             _logger = logger;
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _fileProvider = fileProvider;
+            _notifyService = notifyService;
         }
 
         [AllowAnonymous]
@@ -58,6 +61,7 @@ namespace MehmetUtkuGunduz.Controllers
 
             if (signInResult.Succeeded)
             {
+                _notifyService.Success("Oturum Açılmıştır.");
                 return RedirectToAction("Index");
             }
             if (signInResult.IsLockedOut)
@@ -109,15 +113,16 @@ namespace MehmetUtkuGunduz.Controllers
 
             // default olarak Uye rolü ekleme
             var user = await _userManager.FindByNameAsync(model.UserName);
-            var roleExist = await _roleManager.RoleExistsAsync("Uye");
+            var roleExist = await _roleManager.RoleExistsAsync("Üye");
             if (!roleExist)
             {
-                var role = new AppRole { Name = "Uye" };
+                var role = new AppRole { Name = "Üye" };
                 await _roleManager.CreateAsync(role);
             }
 
-            await _userManager.AddToRoleAsync(user, "Uye");
+            await _userManager.AddToRoleAsync(user, "Üye");
 
+            _notifyService.Success("Üye Kaydı Yapılmıştır. Lütfen Oturum Açınız.");
             return RedirectToAction("Login");
         }
 
@@ -126,6 +131,7 @@ namespace MehmetUtkuGunduz.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            _notifyService.Success("Çıkış Yapılmıştır");
             return RedirectToAction("Login");
         }
 
@@ -195,6 +201,11 @@ namespace MehmetUtkuGunduz.Controllers
             };
 
             return View(userModel);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

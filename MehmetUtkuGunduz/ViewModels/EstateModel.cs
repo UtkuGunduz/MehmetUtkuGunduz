@@ -92,10 +92,14 @@ namespace MehmetUtkuGunduz.ViewModels
         [Required(ErrorMessage = "İnşa Yılı Giriniz!")]
         public int ConstructionYear { get; set; }
 
+        [Required(ErrorMessage = "Fotoğraf URL'si Giriniz!")]
+        public string ImageUrlName { get; set; }
 
         [Required(ErrorMessage = "Fotoğraf URL'si Giriniz!")]
         public Image ImageUrl { get; set; }
 
+        [Required(ErrorMessage = "Fotoğraf URL'si Giriniz!")]
+        public string VideoUrlName { get; set; }
 
         [Required(ErrorMessage = "Video URL'si Giriniz!")]
         public Video VideoUrl { get; set; }

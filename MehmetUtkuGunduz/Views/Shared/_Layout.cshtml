@@ -177,5 +177,6 @@
 	<script src="~/RealEstateTemplate/js/google-map.js"></script>
 	<script src="~/RealEstateTemplate/js/main.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	@await Component.InvokeAsync("Notyf")
 </body>
 </html>

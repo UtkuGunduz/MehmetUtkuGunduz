@@ -6,7 +6,7 @@ namespace MehmetUtkuGunduz.Localisation
     {
         public override IdentityError DuplicateUserName(string userName)
         {
-            return new() { Code = "DuplicateUserName", Description = $"{userName}, kullanıcı adı kayıtlıdır!" };
+            return new() { Code = "DuplicateUserName", Description = $"{userName}, Kullanıcı adı kayıtlıdır!" };
         }
         public override IdentityError DuplicateEmail(string email)
         {

@@ -29,9 +29,9 @@ namespace MehmetUtkuGunduz.Models
         public string Aspect { get; set; }
         public int ConstructionYear { get; set; }
         public int ImageId { get; set; }
-        public Image ImageUrl { get; set; }
+        public Image Image { get; set; }
         public int VideoId { get; set; }
-        public Video VideoUrl { get; set; }
+        public Video Video { get; set; }
         public string ListingOwner { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
