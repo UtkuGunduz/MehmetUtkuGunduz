@@ -30,6 +30,7 @@ namespace MehmetUtkuGunduz.Models
         public int ConstructionYear { get; set; }
         public int ImageId { get; set; }
         public Image Image { get; set; }
+        public string? EstatePhotoUrl { get; set; }
         public int VideoId { get; set; }
         public Video Video { get; set; }
         public string ListingOwner { get; set; }

@@ -11,10 +11,14 @@
                     <table class="table">
                         <tr>
                             <td><b>Fotoğraf</b></td>
+                            <td><img src="~/EstatePhotos/@Model.EstatePhotoUrl" class="img-fluid" width="320"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>Fotoğraf Web</b></td>
                             <td><img src="@Model.ImageUrl.ImageUrl" alt="resim aciklama" width="320"></td>
                         </tr>
                         <tr>
-                            <td><b>Video</b></td>
+                            <td><b>Video Web</b></td>
                             <td>
                             <video width="320" height="240" controls>
                                 <source src="@Model.VideoUrl.VideoUrl" type="video/mp4">

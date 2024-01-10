@@ -98,6 +98,12 @@ namespace MehmetUtkuGunduz.ViewModels
         [Required(ErrorMessage = "Fotoğraf URL'si Giriniz!")]
         public Image ImageUrl { get; set; }
 
+        public string? EstatePhotoUrl { get; set; }
+
+        [Display(Name = "Fotograf")]
+        [Required(ErrorMessage = "Fotograf Seçiniz!")]
+        public IFormFile EstatePhotoFile { get; set; }
+
         [Required(ErrorMessage = "Fotoğraf URL'si Giriniz!")]
         public string VideoUrlName { get; set; }
 

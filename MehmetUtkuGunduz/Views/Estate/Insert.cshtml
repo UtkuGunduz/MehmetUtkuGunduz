@@ -103,12 +103,17 @@
                             <span asp-validation-for="ConstructionYear" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="ImageUrlName" class="form-label">Fotoğraf URL'si</label>
+                            <label asp-for="ImageUrlName" class="form-label">Web Fotoğraf URL'si</label>
                             <input type="url" class="form-control" asp-for="ImageUrlName">
                             <span asp-validation-for="ImageUrlName" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="VideoUrlName" class="form-label">Video URL'si</label>
+                            <label asp-for="EstatePhotoFile"></label>
+                            <input asp-for="EstatePhotoFile" class="form-control" />
+                            <span asp-validation-for="EstatePhotoFile" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="VideoUrlName" class="form-label">Web Video URL'si</label>
                             <input type="url" class="form-control" asp-for="VideoUrlName">
                             <span asp-validation-for="VideoUrlName" class="text-danger"></span>
                         </div>

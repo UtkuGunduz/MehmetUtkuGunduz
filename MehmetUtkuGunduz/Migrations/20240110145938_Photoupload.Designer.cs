@@ -4,6 +4,7 @@ using MehmetUtkuGunduz.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MehmetUtkuGunduz.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240110145938_Photoupload")]
+    partial class Photoupload
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,7 +138,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Estate", b =>
@@ -273,7 +276,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("Estates", (string)null);
+                    b.ToTable("Estates");
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Image", b =>
@@ -290,7 +293,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ImageUrls", (string)null);
+                    b.ToTable("ImageUrls");
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.ToDo", b =>
@@ -310,7 +313,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ToDos", (string)null);
+                    b.ToTable("ToDos");
                 });
 
             modelBuilder.Entity("MehmetUtkuGunduz.Models.Video", b =>
@@ -327,7 +330,7 @@ namespace MehmetUtkuGunduz.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VideoUrls", (string)null);
+                    b.ToTable("VideoUrls");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

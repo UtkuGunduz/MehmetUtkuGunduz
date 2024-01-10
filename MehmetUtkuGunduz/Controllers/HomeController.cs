@@ -8,6 +8,7 @@ using MehmetUtkuGunduz.ViewModels;
 using System.Security.Claims;
 using Microsoft.Extensions.FileProviders;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using System.Data;
 
 namespace MehmetUtkuGunduz.Controllers
 {
@@ -111,7 +112,6 @@ namespace MehmetUtkuGunduz.Controllers
                 return View(model);
             }
 
-            // default olarak Uye rolü ekleme
             var user = await _userManager.FindByNameAsync(model.UserName);
             var roleExist = await _roleManager.RoleExistsAsync("Üye");
             if (!roleExist)
@@ -139,15 +139,30 @@ namespace MehmetUtkuGunduz.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUserList()
         {
-            var userModels = await _userManager.Users.Select(x => new UserModel()
+            var users = await _userManager.Users.ToListAsync();
+
+            var userModels = new List<UserModel>();
+
+            foreach (var user in users)
             {
-                Id = x.Id,
-                FullName = x.FullName,
-                Email = x.Email,
-                UserName = x.UserName,
-            }).ToListAsync();
+                var roles = await _userManager.GetRolesAsync(user);
+                var roleName = roles.FirstOrDefault();
+
+                var userModel = new UserModel()
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Role = roleName
+                };
+
+                userModels.Add(userModel);
+            }
+
             return View(userModels);
         }
+
         public async Task<IActionResult> GetRoleList()
         {
             var roles = await _roleManager.Roles.ToListAsync();

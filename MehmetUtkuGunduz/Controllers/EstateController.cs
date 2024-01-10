@@ -4,6 +4,7 @@ using MehmetUtkuGunduz.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Extensions.FileProviders;
 
 namespace MehmetUtkuGunduz.Controllers
 {
@@ -11,11 +12,13 @@ namespace MehmetUtkuGunduz.Controllers
     {
         private readonly AppDbContext _context;
         private readonly INotyfService _notifyService;
+        private readonly IFileProvider _fileProvider;
 
-        public EstateController(AppDbContext appDbContext, INotyfService notifyService)
+        public EstateController(AppDbContext appDbContext, INotyfService notifyService, IFileProvider fileProvider)
         {
             _context = appDbContext;
             _notifyService = notifyService;
+            _fileProvider = fileProvider;
         }
 
 
@@ -99,6 +102,7 @@ namespace MehmetUtkuGunduz.Controllers
                 PropertyLocation = x.PropertyLocation,
                 Aspect = x.Aspect,
                 ConstructionYear = x.ConstructionYear,
+                EstatePhotoUrl = x.EstatePhotoUrl,
                 ImageUrl = x.Image,
                 VideoUrl = x.Video,
                 ListingOwner = x.ListingOwner,
@@ -127,6 +131,7 @@ namespace MehmetUtkuGunduz.Controllers
         [HttpPost]
         public IActionResult Insert(EstateModel model)
         {
+
             var newImage = new Image { ImageUrl = model.ImageUrlName };
             _context.ImageUrls.Add(newImage);
             var newVideo = new Video { VideoUrl = model.VideoUrlName };
@@ -171,6 +176,21 @@ namespace MehmetUtkuGunduz.Controllers
                 estate.HasParking = model.HasParking;
                 estate.HasWifi = model.HasWifi;
             };
+
+            var rootFolder = _fileProvider.GetDirectoryContents("wwwroot");
+            var estatePhotoUrl = "-";
+
+            if (model.EstatePhotoFile != null && model.EstatePhotoFile.Length > 0)
+            {
+                var filename = Guid.NewGuid().ToString() + Path.GetExtension(model.EstatePhotoFile.FileName);
+                var photoPath = Path.Combine(rootFolder.First(x => x.Name == "EstatePhotos").PhysicalPath, filename);
+                using var stream = new FileStream(photoPath, FileMode.Create);
+                model.EstatePhotoFile.CopyTo(stream);
+                estatePhotoUrl = filename;
+            }
+
+            estate.EstatePhotoUrl = estatePhotoUrl;
+
             _context.Estates.Add(estate);
             _context.SaveChanges();
             _notifyService.Success("Emlak Kaydı Eklenmiştir.");
@@ -203,6 +223,7 @@ namespace MehmetUtkuGunduz.Controllers
                 PropertyLocation = x.PropertyLocation,
                 Aspect = x.Aspect,
                 ConstructionYear = x.ConstructionYear,
+                EstatePhotoUrl = x.EstatePhotoUrl,
                 ImageUrl = x.Image,
                 VideoUrl = x.Video,
                 ListingOwner = x.ListingOwner,
@@ -218,6 +239,7 @@ namespace MehmetUtkuGunduz.Controllers
                 HasParking = x.HasParking,
                 HasWifi = x.HasWifi
 
+
             }).SingleOrDefault(x => x.Id == id);
 
             ViewBag.Categories = _context.Categories.ToList();
@@ -228,22 +250,16 @@ namespace MehmetUtkuGunduz.Controllers
         [HttpPost]
         public IActionResult Edit(EstateModel model)
         {
-            var estate = _context.Estates.Include(e => e.Image).Include(e => e.Video).FirstOrDefault(x => x.Id == model.Id);
+
+
+            var estate = _context.Estates
+                .Include(e => e.Image)
+                .Include(e => e.Video)
+                .FirstOrDefault(x => x.Id == model.Id);
 
             if (estate == null)
             {
                 return RedirectToAction("Index");
-            }
-            if (!string.IsNullOrEmpty(model.ImageUrlName))
-            {
-                estate.Image.ImageUrl = model.ImageUrlName;
-                _context.ImageUrls.Update(estate.Image);
-            }
-
-            if (!string.IsNullOrEmpty(model.VideoUrlName))
-            {
-                estate.Video.VideoUrl = model.VideoUrlName;
-                _context.VideoUrls.Update(estate.Video);
             }
 
             estate.Title = model.Title;
@@ -266,6 +282,7 @@ namespace MehmetUtkuGunduz.Controllers
             estate.PropertyLocation = model.PropertyLocation;
             estate.Aspect = model.Aspect;
             estate.ConstructionYear = model.ConstructionYear;
+
             estate.ListingOwner = model.ListingOwner;
             estate.PhoneNumber = model.PhoneNumber;
             estate.EmailAddress = model.EmailAddress;
@@ -279,11 +296,38 @@ namespace MehmetUtkuGunduz.Controllers
             estate.HasParking = model.HasParking;
             estate.HasWifi = model.HasWifi;
 
+            if (!string.IsNullOrEmpty(model.ImageUrlName))
+            {
+                estate.Image.ImageUrl = model.ImageUrlName;
+                _context.ImageUrls.Update(estate.Image);
+            }
+
+            if (!string.IsNullOrEmpty(model.VideoUrlName))
+            {
+                estate.Video.VideoUrl = model.VideoUrlName;
+                _context.VideoUrls.Update(estate.Video);
+            }
+
+            var rootFolder = _fileProvider.GetDirectoryContents("wwwroot");
+            var estatePhotoUrl = "-";
+
+            if (model.EstatePhotoFile != null && model.EstatePhotoFile.Length > 0)
+            {
+                var filename = Guid.NewGuid().ToString() + Path.GetExtension(model.EstatePhotoFile.FileName);
+                var photoPath = Path.Combine(rootFolder.First(x => x.Name == "EstatePhotos").PhysicalPath, filename);
+                using var stream = new FileStream(photoPath, FileMode.Create);
+                model.EstatePhotoFile.CopyTo(stream);
+                estatePhotoUrl = filename;
+            }
+            estate.EstatePhotoUrl = estatePhotoUrl;
+
             _context.Estates.Update(estate);
             _context.SaveChanges();
+
             _notifyService.Success("Emlak Kaydı Güncellenmiştir.");
             return RedirectToAction("Index");
         }
+
         public IActionResult Delete(int id)
         {
             var estateModel = _context.Estates
@@ -312,6 +356,7 @@ namespace MehmetUtkuGunduz.Controllers
                 PropertyLocation = x.PropertyLocation,
                 Aspect = x.Aspect,
                 ConstructionYear = x.ConstructionYear,
+                EstatePhotoUrl = x.EstatePhotoUrl,
                 ImageUrl = x.Image,
                 VideoUrl = x.Video,
                 ListingOwner = x.ListingOwner,
